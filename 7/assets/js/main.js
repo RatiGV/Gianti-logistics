@@ -22,6 +22,7 @@
     en:{
       cat_service:"Service",cat_project:"Project",cat_gallery:"Gallery",cat_contact:"Contact",sp_results:"Results",sp_popular:"Popular searches",sp_empty:"Nothing found for",
       search:"Search services or projects",nav_home:"Home",nav_about:"About Us",nav_standard:"Standard Shipping",nav_oversized:"Oversized Cargo",nav_engineering:"Engineering Services",nav_terminal:"Terminal & Warehouses",nav_projects:"Our Projects",nav_contact:"Contact",
+      sm_profile:"Company Profile",sm_mission:"Mission",sm_hsse:"Safety & HSSE Policy",sm_iso:"ISO 9001:2015 Certificate",sm_gallery:"Gallery",sm_road:"Road Freight",sm_sea:"Sea Freight",sm_rail:"Rail Freight",sm_air:"Air Freight",sm_heavy:"Oversized & Heavy Cargo",sm_jacking:"Hydraulic Jacking & Skidding Services",sm_engineering:"Engineering Services",sm_terminal:"Gianti Logistics Terminal",sm_wh_free:"Non-bonded Warehouse at Tbilisi GEZ",sm_wh_bonded:"Bonded Warehouse at Tbilisi GEZ",
       news:"News",more:"Learn more",
       s_project:"Project Cargo",s_road:"Road Freight",s_sea:"Sea Freight",s_rail:"Rail Freight",s_air:"Air Freight",s_terminal:"Customs Terminal",s_brokerage:"Customs Brokerage",s_warehouses:"Bonded & Non-bonded Warehouses",
       p1:"Mingachevir",p2:"SOCAR - HAOR",p3:"Tskaltubo 500",p4:"Khevi - Ubisa Road",p5:"Timber Project",p6:"Vessel Project",
@@ -29,6 +30,18 @@
       contact_us:"Contact Us",address:"Gianti Palace, opposite El. Amashukeli St. 17, Tbilisi, 0160",hours:"Mon - Fri · 09:00 - 18:00",standard_mail:"Standard shipping",project_mail:"Project cargo",
       branches:"Branches",branch_uz:"Uzbekistan, Tashkent, Mirabad district, Afrosiyob street 4B",branch_kz:"Republic of Kazakhstan, Almaty, Seifullin Avenue 404/67, office 304",
       partners:"Our Partner International Alliances",rights:"All rights reserved."
+    },
+    ru:{
+      cat_service:"Услуга",cat_project:"Проект",cat_gallery:"Галерея",cat_contact:"Контакты",sp_results:"Результаты",sp_popular:"Популярные запросы",sp_empty:"Ничего не найдено по запросу",
+      search:"Поиск услуг или проектов",nav_home:"Главная",nav_about:"О нас",nav_standard:"Стандартные перевозки",nav_oversized:"Негабаритные перевозки",nav_engineering:"Инженерные услуги",nav_terminal:"Терминал и склады",nav_projects:"Наши проекты",nav_contact:"Контакты",
+      sm_profile:"Профиль компании",sm_mission:"Миссия",sm_hsse:"Безопасность и политика HSSE",sm_iso:"Сертификат ISO 9001:2015",sm_gallery:"Галерея",sm_road:"Автомобильные перевозки",sm_sea:"Морские перевозки",sm_rail:"Железнодорожные перевозки",sm_air:"Авиаперевозки",sm_heavy:"Негабаритные и тяжеловесные грузы",sm_jacking:"Услуги гидравлических домкратов и систем скольжения",sm_engineering:"Инженерные услуги",sm_terminal:"Терминал Gianti Logistics",sm_wh_free:"Нетаможенный склад у Тбилисской GEZ",sm_wh_bonded:"Таможенный склад у Тбилисской GEZ",
+      news:"Новости",more:"Подробнее",
+      s_project:"Проектные перевозки",s_road:"Автомобильные перевозки",s_sea:"Морские перевозки",s_rail:"Железнодорожные перевозки",s_air:"Авиаперевозки",s_terminal:"Таможенный терминал",s_brokerage:"Брокерские услуги",s_warehouses:"Таможенные и нетаможенные склады",
+      p1:"Мингечевир",p2:"SOCAR - HAOR",p3:"Цхалтубо 500",p4:"Дорога Хеви - Убиса",p5:"Лесной проект",p6:"Проект судна",
+      photo:"Фотогалерея",video:"Видеогалерея",next:"Далее",
+      contact_us:"Свяжитесь с нами",address:"Гианти Палас, напротив ул. Эл. Амашукели 17, Тбилиси, 0160",hours:"Пн - Пт · 09:00 - 18:00",standard_mail:"Стандартные перевозки",project_mail:"Проектные перевозки",
+      branches:"Филиалы",branch_uz:"Узбекистан, Ташкент, Мирабадский район, улица Афросиаб 4Б",branch_kz:"Республика Казахстан, Алматы, проспект Сейфуллина 404/67, офис 304",
+      partners:"Наши партнерские международные альянсы",rights:"Все права защищены."
     }
   };
   var i18nEls=$$("[data-i18n]"),phEls=$$("[data-i18n-ph]");
@@ -43,7 +56,7 @@
     $$("[data-i18n-ph]").forEach(function(el){var k=el.getAttribute("data-i18n-ph");if(d[k]!=null){el.setAttribute("placeholder",d[k]);el.setAttribute("aria-label",d[k])}});
     $$(".caps").forEach(capsify);
     root.setAttribute("lang",lang);
-    $$(".lang-btn span").forEach(function(s){s.textContent=lang==="en"?"ENGLISH":"GEORGIAN"});
+    $$(".lang-code").forEach(function(s){s.textContent=lang.toUpperCase()});
     $$(".lang-menu li").forEach(function(li){li.classList.toggle("current",li.getAttribute("data-lang")===lang)});
     setStored(lang);
   }
@@ -69,6 +82,7 @@
     btn.addEventListener("click",function(e){e.stopPropagation();var o=box.classList.toggle("open");btn.setAttribute("aria-expanded",o)});
     $$(".lang-menu li",box).forEach(function(li){
       li.addEventListener("click",function(){applyLang(li.getAttribute("data-lang"));box.classList.remove("open");btn.setAttribute("aria-expanded","false")});
+      li.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();li.click();btn.focus()}});
     });
   });
   doc.addEventListener("click",function(){$$(".lang.open").forEach(function(b){b.classList.remove("open")})});
@@ -88,15 +102,34 @@
     burger.setAttribute("aria-expanded",o);
     doc.body.classList.toggle("nav-open",o);
   });
+  /* Submenus */
+  var subs=$$(".has-sub",nav);
+  function closeSubs(except){subs.forEach(function(li){if(li!==except){li.classList.remove("open");$(".sub-toggle",li).setAttribute("aria-expanded","false")}})}
+  subs.forEach(function(li){
+    var t=$(".sub-toggle",li);
+    t.addEventListener("click",function(e){
+      e.stopPropagation();
+      var o=!li.classList.contains("open");
+      closeSubs(li);
+      li.classList.toggle("open",o);
+      t.setAttribute("aria-expanded",o?"true":"false");
+      if(!o&&doc.activeElement&&li.contains(doc.activeElement))doc.activeElement.blur();
+    });
+  });
+  doc.addEventListener("click",function(e){if(!e.target.closest(".has-sub"))closeSubs()});
   $$("a",nav).forEach(function(a){a.addEventListener("click",function(){
-    $$("a",nav).forEach(function(x){x.classList.remove("active")});
-    a.classList.add("active");
+    if(a.closest(".mobile-tools"))return;
+    var top=a.closest(".main-nav>ul>li");
+    $$(".main-nav>ul>li>a").forEach(function(x){x.classList.remove("active")});
+    if(top)$("a",top).classList.add("active");
+    closeSubs();
+    a.blur();
     closeNav();
   })});
-  window.addEventListener("keydown",function(e){if(e.key==="Escape"){closeNav();closeLb()}});
+  window.addEventListener("keydown",function(e){if(e.key==="Escape"){closeNav();closeLb();closeSubs();if(doc.activeElement&&doc.activeElement.closest(".has-sub"))doc.activeElement.blur()}});
   /* Search with live suggestions */
   function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
-  function curLang(){return root.getAttribute("lang")==="en"?"en":"ka"}
+  function curLang(){var l=root.getAttribute("lang");return dict[l]?l:"ka"}
   function tr(k){var l=curLang();return (dict[l]&&dict[l][k]!=null)?dict[l][k]:(dict.ka[k]||"")}
   function buildIndex(){
     var items=[];
@@ -116,7 +149,7 @@
     return t;
   }
   function itemHay(it){
-    return ((it.key?(dict.ka[it.key]||"")+" "+((dict.en[it.key])||""):"")+" "+(it.raw||"")+" "+(it.extra||"")+" "+tr(it.cat)).toLowerCase();
+    return ((it.key?(dict.ka[it.key]||"")+" "+((dict.en[it.key])||"")+" "+((dict.ru[it.key])||""):"")+" "+(it.raw||"")+" "+(it.extra||"")+" "+tr(it.cat)).toLowerCase();
   }
   function highlight(text,q){
     var i=text.toLowerCase().indexOf(q);
@@ -160,7 +193,7 @@
       }
       results=searchIndex.filter(function(it){return itemHay(it).indexOf(q)>-1}).slice(0,7);
       if(!results.length){
-        panel.innerHTML='<div class="sp-empty"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6M8.5 11h5"/></svg>'+esc(tr("sp_empty"))+(curLang()==="en"?' "'+esc(input.value.trim())+'"':' - "'+esc(input.value.trim())+'"')+'</div>';
+        panel.innerHTML='<div class="sp-empty"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6M8.5 11h5"/></svg>'+esc(tr("sp_empty"))+(curLang()!=="ka"?' "'+esc(input.value.trim())+'"':' - "'+esc(input.value.trim())+'"')+'</div>';
         return;
       }
       panel.innerHTML='<div class="sp-label">'+esc(tr("sp_results"))+' · '+results.length+'</div>'+results.map(function(it,i){
@@ -287,7 +320,7 @@
     rev.forEach(function(el,i){el.style.transitionDelay=(i%4)*80+"ms";io.observe(el)});
   }else{rev.forEach(function(el){el.classList.add("in")})}
   /* Active nav link by section */
-  var links=$$(".main-nav a[href^='#']").filter(function(a){return !a.closest(".mobile-tools")});
+  var links=$$(".main-nav>ul>li>a[href^='#']");
   var secs=["top","about","services","projects","contact"].map(function(id){return doc.getElementById(id)}).filter(Boolean);
   window.addEventListener("scroll",function(){
     var y=window.scrollY+160,cur="top";

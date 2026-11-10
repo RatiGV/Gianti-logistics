@@ -40,10 +40,15 @@
           <li><a href="#" aria-label="LinkedIn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path class="fill" d="M6.9 8.8H3.8V20h3.1zM5.3 3.8a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6zM20.2 13.6c0-3-1.6-4.9-4.2-4.9-1.4 0-2.4.8-2.8 1.5V8.8h-3V20h3.1v-5.6c0-1.5.3-2.9 2.1-2.9 1.8 0 1.8 1.7 1.8 3V20h3.1z"/></svg></a></li>
         </ul>
         <div class="lang" id="lang">
-          <button type="button" class="lang-btn" aria-haspopup="listbox" aria-expanded="false"><span id="langLabel">GEORGIAN</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+          <button type="button" class="lang-btn" aria-haspopup="listbox" aria-expanded="false" aria-label="Language">
+            <svg class="lang-globe" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.5 3.8 5.5 3.8 9s-1.2 6.5-3.8 9c-2.6-2.5-3.8-5.5-3.8-9S9.4 5.5 12 3z"/></svg>
+            <span class="lang-code" id="langLabel">KA</span>
+            <svg class="lang-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
           <ul class="lang-menu" role="listbox">
-            <li role="option" data-lang="ka">GEORGIAN</li>
-            <li role="option" data-lang="en">ENGLISH</li>
+            <li role="option" data-lang="ka" tabindex="0"><span class="lang-badge">KA</span><span class="lang-name">ქართული<small>Georgian</small></span><svg class="lang-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></li>
+            <li role="option" data-lang="en" tabindex="0"><span class="lang-badge">EN</span><span class="lang-name">English<small>English</small></span><svg class="lang-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></li>
+            <li role="option" data-lang="ru" tabindex="0"><span class="lang-badge">RU</span><span class="lang-name">Русский<small>Russian</small></span><svg class="lang-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></li>
           </ul>
         </div>
       </div>
@@ -53,11 +58,11 @@
   <nav class="main-nav" id="mainNav" aria-label="Main">
     <ul class="container">
       <li><a href="#top" class="caps active" data-i18n="nav_home">მთავარი</a></li>
-      <li><a href="#about" class="caps" data-i18n="nav_about">ჩვენს შესახებ</a></li>
-      <li><a href="#services" class="caps" data-i18n="nav_standard">სტანდარტული გადაზიდვები</a></li>
-      <li><a href="#services" class="caps" data-i18n="nav_oversized">არაგაბარიტული გადაზიდვები</a></li>
+      <li class="has-sub"><a href="#about" class="caps" data-i18n="nav_about">ჩვენს შესახებ</a><button type="button" class="sub-toggle" aria-expanded="false" aria-label="Submenu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><ul class="submenu"><li><a href="#about" data-i18n="sm_profile">კომპანიის პროფილი</a></li><li><a href="#about" data-i18n="sm_mission">მისია</a></li><li><a href="#about" data-i18n="sm_hsse">უსაფრთხოება და HSSE პოლიტიკა</a></li><li><a href="#about" data-i18n="sm_iso">ISO 9001:2015 სერტიფიკატი</a></li><li><a href="#gallery" data-i18n="sm_gallery">გალერეა</a></li></ul></li>
+      <li class="has-sub"><a href="#services" class="caps" data-i18n="nav_standard">სტანდარტული გადაზიდვები</a><button type="button" class="sub-toggle" aria-expanded="false" aria-label="Submenu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><ul class="submenu"><li><a href="#svc-road" data-i18n="sm_road">სახმელეთო გადაზიდვა</a></li><li><a href="#svc-sea" data-i18n="sm_sea">საზღვაო გადაზიდვა</a></li><li><a href="#svc-rail" data-i18n="sm_rail">სარკინიგზო გადაზიდვა</a></li><li><a href="#svc-air" data-i18n="sm_air">საჰაერო გადაზიდვა</a></li></ul></li>
+      <li class="has-sub"><a href="#services" class="caps" data-i18n="nav_oversized">არაგაბარიტული გადაზიდვები</a><button type="button" class="sub-toggle" aria-expanded="false" aria-label="Submenu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><ul class="submenu"><li><a href="#svc-project" data-i18n="sm_heavy">არაგაბარიტული და მძიმეწონიანი ტვირთები</a></li><li><a href="#svc-project" data-i18n="sm_jacking">ჰიდრავლიური დომკრატებით და სასრიალო სისტემებით მომსახურება</a></li><li><a href="#svc-project" data-i18n="sm_engineering">საინჟინრო მომსახურება</a></li></ul></li>
       <li><a href="#services" class="caps" data-i18n="nav_engineering">საინჟინრო მომსახურება</a></li>
-      <li><a href="#services" class="caps" data-i18n="nav_terminal">ტერმინალი და საწყობები</a></li>
+      <li class="has-sub"><a href="#services" class="caps" data-i18n="nav_terminal">ტერმინალი და საწყობები</a><button type="button" class="sub-toggle" aria-expanded="false" aria-label="Submenu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><ul class="submenu"><li><a href="#svc-terminal" data-i18n="sm_terminal">გიანთი ლოჯისტიკის ტერმინალი</a></li><li><a href="#svc-warehouses" data-i18n="sm_wh_free">არასაბაჟო საწყობი თბილისის გეზ-თან</a></li><li><a href="#svc-warehouses" data-i18n="sm_wh_bonded">საბაჟო საწყობი თბილისის გეზ-თან</a></li></ul></li>
       <li><a href="#projects" class="caps" data-i18n="nav_projects">ჩვენი პროექტები</a></li>
       <li><a href="#contact" class="caps" data-i18n="nav_contact">კონტაქტი</a></li>
     </ul>
@@ -75,14 +80,14 @@
   <section class="services" id="services">
     <div class="container">
       <div class="services-grid">
-        <a href="#contact" class="service-card reveal"><div class="sc-img"><img src="assets/img/services/project.jpg" alt="" loading="lazy"></div><h3 class="caps" data-i18n="s_project">საპროექტო გადაზიდვები</h3><span class="more caps" data-i18n="more">გაეცანით</span></a>
-        <a href="#contact" class="service-card reveal"><div class="sc-img"><img src="assets/img/services/road.jpg" alt="" loading="lazy"></div><h3 class="caps" data-i18n="s_road">სახმელეთო გადაზიდვები</h3><span class="more caps" data-i18n="more">გაეცანით</span></a>
-        <a href="#contact" class="service-card reveal"><div class="sc-img"><img src="assets/img/services/sea.jpg" alt="" loading="lazy"></div><h3 class="caps" data-i18n="s_sea">საზღვაო გადაზიდვები</h3><span class="more caps" data-i18n="more">გაეცანით</span></a>
-        <a href="#contact" class="service-card reveal"><div class="sc-img"><img src="assets/img/services/rail.jpg" alt="" loading="lazy"></div><h3 class="caps" data-i18n="s_rail">სარკინიგზო გადაზიდვები</h3><span class="more caps" data-i18n="more">გაეცანით</span></a>
-        <a href="#contact" class="service-card reveal"><div class="sc-img"><img src="assets/img/services/air.jpg" alt="" loading="lazy"></div><h3 class="caps" data-i18n="s_air">საჰაერო გადაზიდვები</h3><span class="more caps" data-i18n="more">გაეცანით</span></a>
-        <a href="#contact" class="service-card reveal"><div class="sc-img"><img src="assets/img/services/customs-terminal.jpg" alt="" loading="lazy" style="object-position:center 20%"></div><h3 class="caps" data-i18n="s_terminal">საბაჟო ტერმინალი</h3><span class="more caps" data-i18n="more">გაეცანით</span></a>
-        <a href="#contact" class="service-card reveal"><div class="sc-img"><img src="assets/img/services/brokerage.jpg" alt="" loading="lazy"></div><h3 class="caps" data-i18n="s_brokerage">საბროკერო მომსახურება</h3><span class="more caps" data-i18n="more">გაეცანით</span></a>
-        <a href="#contact" class="service-card reveal"><div class="sc-img"><img src="assets/img/services/warehouses.jpg" alt="" loading="lazy"></div><h3 class="caps" data-i18n="s_warehouses">საბაჟო და არასაბაჟო საწყობები</h3><span class="more caps" data-i18n="more">გაეცანით</span></a>
+        <a href="#contact" id="svc-project" class="service-card reveal"><div class="sc-img"><img src="assets/img/services/project.jpg" alt="" loading="lazy"></div><h3 class="caps" data-i18n="s_project">საპროექტო გადაზიდვები</h3><span class="more caps" data-i18n="more">გაეცანით</span></a>
+        <a href="#contact" id="svc-road" class="service-card reveal"><div class="sc-img"><img src="assets/img/services/road.jpg" alt="" loading="lazy"></div><h3 class="caps" data-i18n="s_road">სახმელეთო გადაზიდვები</h3><span class="more caps" data-i18n="more">გაეცანით</span></a>
+        <a href="#contact" id="svc-sea" class="service-card reveal"><div class="sc-img"><img src="assets/img/services/sea.jpg" alt="" loading="lazy"></div><h3 class="caps" data-i18n="s_sea">საზღვაო გადაზიდვები</h3><span class="more caps" data-i18n="more">გაეცანით</span></a>
+        <a href="#contact" id="svc-rail" class="service-card reveal"><div class="sc-img"><img src="assets/img/services/rail.jpg" alt="" loading="lazy"></div><h3 class="caps" data-i18n="s_rail">სარკინიგზო გადაზიდვები</h3><span class="more caps" data-i18n="more">გაეცანით</span></a>
+        <a href="#contact" id="svc-air" class="service-card reveal"><div class="sc-img"><img src="assets/img/services/air.jpg" alt="" loading="lazy"></div><h3 class="caps" data-i18n="s_air">საჰაერო გადაზიდვები</h3><span class="more caps" data-i18n="more">გაეცანით</span></a>
+        <a href="#contact" id="svc-terminal" class="service-card reveal"><div class="sc-img"><img src="assets/img/services/customs-terminal.jpg" alt="" loading="lazy" style="object-position:center 20%"></div><h3 class="caps" data-i18n="s_terminal">საბაჟო ტერმინალი</h3><span class="more caps" data-i18n="more">გაეცანით</span></a>
+        <a href="#contact" id="svc-brokerage" class="service-card reveal"><div class="sc-img"><img src="assets/img/services/brokerage.jpg" alt="" loading="lazy"></div><h3 class="caps" data-i18n="s_brokerage">საბროკერო მომსახურება</h3><span class="more caps" data-i18n="more">გაეცანით</span></a>
+        <a href="#contact" id="svc-warehouses" class="service-card reveal"><div class="sc-img"><img src="assets/img/services/warehouses.jpg" alt="" loading="lazy"></div><h3 class="caps" data-i18n="s_warehouses">საბაჟო და არასაბაჟო საწყობები</h3><span class="more caps" data-i18n="more">გაეცანით</span></a>
       </div>
     </div>
   </section>
