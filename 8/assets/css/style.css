@@ -1,3 +1,4 @@
+@font-face{font-family:"LFT Etica";src:url(../fonts/LFT_Etica_Light.otf) format("opentype");font-weight:300;font-style:normal;font-display:swap}
 :root{
   --green:#6cc04a;
   --green-dark:#4fa02f;
@@ -147,7 +148,7 @@ h1,h2,h3{margin:0}
 .hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(10,20,10,.05) 0%,rgba(10,20,10,0) 35%,rgba(10,20,10,.55) 78%,rgba(10,20,10,.8) 100%)}
 .hero-inner{position:relative;padding-bottom:clamp(28px,4vw,56px)}
 .hero-row{display:flex;align-items:flex-end;justify-content:space-between;gap:24px}
-.hero-title{font-family:var(--font-latin);font-size:clamp(32px,5.6vw,84px);font-weight:800;line-height:.98;letter-spacing:-.025em;text-shadow:0 6px 30px rgba(0,0,0,.25);opacity:0;animation:fadeUp 1s .15s var(--ease) forwards}
+.hero-title{font-family:"LFT Etica",var(--font-latin);font-size:60px;font-weight:300;line-height:1.1;letter-spacing:0;text-shadow:0 6px 30px rgba(0,0,0,.25);opacity:0;animation:fadeUp 1s .15s var(--ease) forwards}
 .hero-line{display:block;height:1px;margin-top:clamp(18px,2.4vw,30px);background:linear-gradient(90deg,rgba(255,255,255,.85),rgba(255,255,255,.15));transform-origin:left;transform:scaleX(0);animation:lineIn 1.2s .5s var(--ease) forwards}
 .btn-news{flex:none;display:inline-flex;align-items:center;gap:14px;background:var(--green);color:#fff;border-radius:999px;padding:8px 8px 8px 26px;font-weight:700;font-size:clamp(14px,1.2vw,17px);box-shadow:0 14px 34px rgba(108,192,74,.4);transition:background .3s,transform .3s var(--ease),box-shadow .3s;opacity:0;animation:fadeUp 1s .35s var(--ease) forwards}
 .btn-news .btn-ic{width:40px;height:40px;background:#fff;color:var(--green-dark)}
@@ -306,6 +307,7 @@ h1,h2,h3{margin:0}
   .hero-row{flex-direction:column;align-items:flex-start;gap:20px}
 }
 @media (max-width:640px){
+  .hero-title{font-size:38px}
   .hero{min-height:440px}
   .hero-img{object-position:35% center}
   .services-grid{gap:12px}
