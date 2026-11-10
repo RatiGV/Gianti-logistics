@@ -1,3 +1,4 @@
+@font-face{font-family:"LFT Etica";src:url(../fonts/LFT_Etica_Light.otf) format("opentype");font-weight:300;font-style:normal;font-display:swap}
 :root{
   --green:#6cc04a;
   --green-dark:#4fa02f;
@@ -137,7 +138,7 @@ h1,h2,h3{margin:0}
 .hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:heroZoom 18s ease-in-out infinite alternate}
 .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(0,0,0,.45))}
 .hero-inner{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:20px;padding-bottom:24px}
-.hero-title{font-family:var(--font-latin);font-size:clamp(18px,2.4vw,30px);font-weight:600;border-bottom:2px solid #fff;padding-bottom:2px;letter-spacing:.01em;opacity:0;animation:fadeUp .9s .2s forwards}
+.hero-title{font-family:"LFT Etica",var(--font-latin);font-size:60px;font-weight:300;line-height:1.1;border-bottom:2px solid #fff;padding-bottom:4px;letter-spacing:0;opacity:0;animation:fadeUp .9s .2s forwards}
 .btn-news{display:inline-flex;align-items:center;gap:18px;background:var(--green);color:#fff;border-radius:40px;padding:12px 26px;font-weight:700;font-size:clamp(14px,1.5vw,20px);box-shadow:0 8px 20px rgba(0,0,0,.2);transition:.3s;opacity:0;animation:fadeUp .9s .4s forwards}
 .btn-news svg{width:46px;height:14px;fill:none;stroke:#fff;stroke-width:2;transition:transform .3s}
 .btn-news:hover{background:var(--green-dark)}
@@ -274,6 +275,7 @@ h1,h2,h3{margin:0}
   .project-card{flex-basis:calc((100% - 2*16px)/3)}
 }
 @media (max-width:640px){
+  .hero-title{font-size:38px}
   .hero{min-height:340px}
   .hero-img{object-position:35% center}
   .hero-inner{flex-direction:column;align-items:flex-start;gap:14px}
