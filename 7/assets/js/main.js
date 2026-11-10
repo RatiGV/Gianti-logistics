@@ -18,9 +18,10 @@
   }
   /* i18n */
   var dict={
-    ka:{},
+    ka:{cat_service:"მომსახურება",cat_project:"პროექტი",cat_gallery:"გალერეა",cat_contact:"კონტაქტი",sp_results:"შედეგები",sp_popular:"პოპულარული ძიება",sp_empty:"ვერაფერი მოიძებნა"},
     en:{
-      search:"Search",nav_home:"Home",nav_about:"About Us",nav_standard:"Standard Shipping",nav_oversized:"Oversized Cargo",nav_engineering:"Engineering Services",nav_terminal:"Terminal & Warehouses",nav_projects:"Our Projects",nav_contact:"Contact",
+      cat_service:"Service",cat_project:"Project",cat_gallery:"Gallery",cat_contact:"Contact",sp_results:"Results",sp_popular:"Popular searches",sp_empty:"Nothing found for",
+      search:"Search services or projects",nav_home:"Home",nav_about:"About Us",nav_standard:"Standard Shipping",nav_oversized:"Oversized Cargo",nav_engineering:"Engineering Services",nav_terminal:"Terminal & Warehouses",nav_projects:"Our Projects",nav_contact:"Contact",
       news:"News",more:"Learn more",
       s_project:"Project Cargo",s_road:"Road Freight",s_sea:"Sea Freight",s_rail:"Rail Freight",s_air:"Air Freight",s_terminal:"Customs Terminal",s_brokerage:"Customs Brokerage",s_warehouses:"Bonded & Non-bonded Warehouses",
       p1:"Mingachevir",p2:"SOCAR - HAOR",p3:"Tskaltubo 500",p4:"Khevi - Ubisa Road",p5:"Timber Project",p6:"Vessel Project",
@@ -93,23 +94,119 @@
     closeNav();
   })});
   window.addEventListener("keydown",function(e){if(e.key==="Escape"){closeNav();closeLb()}});
-  /* Search: scroll to first matching section text */
+  /* Search with live suggestions */
+  function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+  function curLang(){return root.getAttribute("lang")==="en"?"en":"ka"}
+  function tr(k){var l=curLang();return (dict[l]&&dict[l][k]!=null)?dict[l][k]:(dict.ka[k]||"")}
+  function buildIndex(){
+    var items=[];
+    $$("main .service-card").forEach(function(c){var h=$("h3",c);items.push({key:h.getAttribute("data-i18n"),cat:"cat_service",img:$("img",c).getAttribute("src"),target:c})});
+    $$("main .project-card").forEach(function(c){var t=$("span",c);items.push({key:t.getAttribute("data-i18n"),cat:"cat_project",img:$("img",c).getAttribute("src"),target:c})});
+    $$("main .gallery-box").forEach(function(c){var h=$("h2",c);items.push({key:h.getAttribute("data-i18n"),cat:"cat_gallery",img:$(".gb-slides img",c).getAttribute("src"),target:c})});
+    $$("main .contact .info li").forEach(function(li){
+      var k=$("[data-i18n]",li),a=$("a",li),ic=$("img",li);
+      items.push({key:k?k.getAttribute("data-i18n"):null,raw:a?a.textContent:"",extra:a?a.textContent:"",cat:"cat_contact",icon:ic?ic.getAttribute("src"):null,target:li});
+    });
+    return items;
+  }
+  var searchIndex=buildIndex();
+  function itemTitle(it){
+    var t=it.key?tr(it.key):it.raw;
+    if(it.key&&it.extra)t+=": "+it.extra;
+    return t;
+  }
+  function itemHay(it){
+    return ((it.key?(dict.ka[it.key]||"")+" "+((dict.en[it.key])||""):"")+" "+(it.raw||"")+" "+(it.extra||"")+" "+tr(it.cat)).toLowerCase();
+  }
+  function highlight(text,q){
+    var i=text.toLowerCase().indexOf(q);
+    if(!q||i<0)return esc(text);
+    return esc(text.slice(0,i))+"<mark>"+esc(text.slice(i,i+q.length))+"</mark>"+esc(text.slice(i+q.length));
+  }
+  var arrowSvg='<svg class="sp-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>';
+  var popular=["s_project","s_sea","s_air","s_warehouses","p3"];
+  function flash(el){
+    el.animate&&el.animate([{boxShadow:"0 0 0 0 rgba(108,192,74,.9)"},{boxShadow:"0 0 0 14px rgba(108,192,74,0)"}],{duration:1100,iterations:2});
+  }
+  function goTo(it){
+    closeNav();
+    var t=it.target;
+    if(t.closest(".projects-track")){
+      $("#projects").scrollIntoView({behavior:"smooth",block:"center"});
+      var tr2=t.parentNode;setTimeout(function(){tr2.scrollTo({left:t.offsetLeft-tr2.offsetLeft-4,behavior:"smooth"})},350);
+    }else{
+      t.scrollIntoView({behavior:"smooth",block:"center"});
+    }
+    setTimeout(function(){flash(t)},450);
+  }
   $$(".search").forEach(function(form){
+    var input=$("input",form),panel=$(".search-panel",form),clear=$(".search-clear",form),results=[],active=-1;
+    function setOpen(o){form.classList.toggle("open",o);input.setAttribute("aria-expanded",o?"true":"false")}
+    function setActive(i){
+      var els=$$(".sp-item",panel);
+      els.forEach(function(e){e.classList.remove("active")});
+      active=i;
+      if(els[i]){els[i].classList.add("active");els[i].scrollIntoView({block:"nearest"})}
+    }
+    function render(){
+      var q=input.value.trim().toLowerCase();
+      form.classList.toggle("has-value",input.value.length>0);
+      active=-1;
+      if(!q){
+        results=popular.map(function(k){return searchIndex.filter(function(it){return it.key===k})[0]}).filter(Boolean);
+        panel.innerHTML='<div class="sp-label">'+esc(tr("sp_popular"))+'</div><div class="sp-chips">'+results.map(function(it,i){return '<button type="button" class="sp-chip" data-i="'+i+'">'+esc(itemTitle(it))+'</button>'}).join("")+'</div>';
+        results=[];
+        return;
+      }
+      results=searchIndex.filter(function(it){return itemHay(it).indexOf(q)>-1}).slice(0,7);
+      if(!results.length){
+        panel.innerHTML='<div class="sp-empty"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6M8.5 11h5"/></svg>'+esc(tr("sp_empty"))+(curLang()==="en"?' "'+esc(input.value.trim())+'"':' - "'+esc(input.value.trim())+'"')+'</div>';
+        return;
+      }
+      panel.innerHTML='<div class="sp-label">'+esc(tr("sp_results"))+' · '+results.length+'</div>'+results.map(function(it,i){
+        var th=it.img?'<img src="'+esc(it.img)+'" alt="" loading="lazy">':'<img class="sp-icon" src="'+esc(it.icon)+'" alt="">';
+        return '<div class="sp-item" role="option" data-i="'+i+'"><span class="sp-thumb">'+th+'</span><span class="sp-text"><span class="sp-title">'+highlight(itemTitle(it),q)+'</span><span class="sp-cat">'+esc(tr(it.cat))+'</span></span>'+arrowSvg+'</div>';
+      }).join("");
+      setActive(0);
+    }
+    function choose(i){
+      var it=results[i];if(!it)return;
+      setOpen(false);input.blur();goTo(it);
+    }
+    input.addEventListener("focus",function(){form.classList.add("focused");render();setOpen(true)});
+    input.addEventListener("blur",function(){form.classList.remove("focused")});
+    input.addEventListener("input",function(){render();setOpen(true)});
+    input.addEventListener("keydown",function(e){
+      var n=$$(".sp-item",panel).length;
+      if(e.key==="ArrowDown"&&n){e.preventDefault();setActive((active+1)%n)}
+      else if(e.key==="ArrowUp"&&n){e.preventDefault();setActive((active-1+n)%n)}
+      else if(e.key==="Escape"){setOpen(false);input.blur()}
+    });
+    panel.addEventListener("mousedown",function(e){e.preventDefault()});
+    panel.addEventListener("click",function(e){
+      var chip=e.target.closest(".sp-chip");
+      if(chip){input.value=chip.textContent;render();setOpen(true);input.focus();return}
+      var item=e.target.closest(".sp-item");
+      if(item)choose(+item.getAttribute("data-i"));
+    });
+    panel.addEventListener("mousemove",function(e){var item=e.target.closest(".sp-item");if(item&&+item.getAttribute("data-i")!==active)setActive(+item.getAttribute("data-i"))});
+    clear.addEventListener("mousedown",function(e){e.preventDefault()});
+    clear.addEventListener("click",function(){input.value="";render();input.focus()});
     form.addEventListener("submit",function(e){
       e.preventDefault();
-      var q=($("input",form).value||"").trim().toLowerCase();
-      if(!q)return;
-      var hit=$$("main h1,main h2,main h3,main .project-card span,main .info span").filter(function(el){
-        var t=(dict.ka[el.getAttribute("data-i18n")]||"")+" "+((dict.en||{})[el.getAttribute("data-i18n")]||"")+" "+el.textContent;
-        return t.toLowerCase().indexOf(q)>-1;
-      })[0];
-      closeNav();
-      if(hit){
-        var target=hit.closest(".service-card,.project-card,section")||hit;
-        target.scrollIntoView({behavior:"smooth",block:"center"});
-        target.animate&&target.animate([{boxShadow:"0 0 0 0 rgba(108,192,74,.9)"},{boxShadow:"0 0 0 12px rgba(108,192,74,0)"}],{duration:1200,iterations:2});
-      }
+      if(!input.value.trim()){input.focus();return}
+      render();
+      if(results.length)choose(active>-1?active:0);else setOpen(true);
     });
+    doc.addEventListener("click",function(e){if(!form.contains(e.target))setOpen(false)});
+  });
+  /* "/" focuses the search */
+  doc.addEventListener("keydown",function(e){
+    if(e.key!=="/"||e.ctrlKey||e.metaKey||e.altKey)return;
+    var tag=(doc.activeElement&&doc.activeElement.tagName)||"";
+    if(/INPUT|TEXTAREA|SELECT/.test(tag))return;
+    var inp=$("#searchInput");
+    if(inp&&inp.offsetParent!==null){e.preventDefault();inp.focus()}
   });
   /* Projects carousel */
   var track=$("#prTrack"),prev=$("#prPrev"),next=$("#prNext");

@@ -21,9 +21,15 @@
       <img src="assets/img/logo.png" alt="Gianti Logistics - We Make It Happen" width="350" height="90">
     </a>
     <div class="header-tools">
-      <form class="search" role="search" action="#" id="searchForm">
-        <span class="search-icon" aria-hidden="true"></span>
-        <input type="search" id="searchInput" data-i18n-ph="search" placeholder="ძიება" aria-label="ძიება">
+      <form class="search" role="search" action="#" id="searchForm" autocomplete="off">
+        <div class="search-field">
+          <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
+          <input type="search" id="searchInput" data-i18n-ph="search" placeholder="მოძებნეთ მომსახურება ან პროექტი" aria-label="მოძებნეთ მომსახურება ან პროექტი" role="combobox" aria-autocomplete="list" aria-expanded="false">
+          <button type="button" class="search-clear" aria-label="Clear"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17"/></svg></button>
+          <kbd class="search-kbd" aria-hidden="true">/</kbd>
+          <button type="submit" class="search-submit" aria-label="Search"><svg viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6"/></svg></button>
+        </div>
+        <div class="search-panel" role="listbox"></div>
       </form>
       <div class="tools-row">
         <ul class="socials">

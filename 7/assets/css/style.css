@@ -30,10 +30,44 @@ h1,h2,h3{margin:0}
 .site-header.scrolled .header-top{padding-top:8px;padding-bottom:8px}
 .logo img{width:clamp(170px,22vw,260px);height:auto}
 .header-tools{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
-.search{position:relative;display:flex;align-items:center;width:clamp(220px,28vw,420px);border-left:3px solid #4a4a4a;border-right:3px solid #4a4a4a;padding:4px 14px}
-.search-icon{width:18px;height:18px;border:2px solid #bdbdbd;border-radius:50%;flex:none}
-.search input{border:0;outline:0;background:transparent;font:inherit;font-size:18px;font-weight:600;padding:4px 12px;width:100%;color:var(--text)}
-.search input::placeholder{color:#333}
+.search{position:relative;width:clamp(260px,30vw,440px)}
+.search-field{position:relative;display:flex;align-items:center;gap:6px;height:46px;padding:0 5px 0 16px;background:#f3f6f1;border:1.5px solid #e1e8dd;border-radius:999px;transition:background .25s,border-color .25s,box-shadow .25s}
+.search-field:hover{border-color:#cfdcc8}
+.search.focused .search-field{background:#fff;border-color:var(--green);box-shadow:0 0 0 4px rgba(108,192,74,.16),0 10px 28px rgba(31,77,28,.1)}
+.search-icon{width:19px;height:19px;flex:none;fill:none;stroke:#8a9686;stroke-width:2.2;stroke-linecap:round;transition:stroke .25s}
+.search.focused .search-icon{stroke:var(--green-dark)}
+.search input{flex:1;min-width:0;height:100%;border:0;outline:0;background:transparent;font:inherit;font-size:14px;font-weight:500;color:var(--text);padding:0 4px}
+.search input::placeholder{color:#8a9188;font-weight:400}
+.search input::-webkit-search-cancel-button{display:none}
+.search-clear{display:none;width:26px;height:26px;border-radius:50%;place-items:center;flex:none;background:#e6ebe3;transition:background .2s}
+.search-clear svg{width:14px;height:14px;fill:none;stroke:#5c6659;stroke-width:2.4;stroke-linecap:round}
+.search-clear:hover{background:#d8e0d4}
+.search.has-value .search-clear{display:grid}
+.search-kbd{flex:none;font-family:var(--font-latin);font-size:12px;font-weight:600;color:#7d8679;min-width:24px;height:24px;display:grid;place-items:center;border:1px solid #d3dbcf;border-bottom-width:2px;border-radius:6px;background:#fff;transition:opacity .2s}
+.search.focused .search-kbd,.search.has-value .search-kbd{display:none}
+.search-submit{flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--green);box-shadow:0 4px 12px rgba(108,192,74,.35);transform:scale(.85);opacity:0;pointer-events:none;transition:transform .25s,opacity .25s,background .2s}
+.search-submit svg{width:18px;height:18px;fill:none;stroke:#fff;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.search.focused .search-submit,.search.has-value .search-submit{transform:none;opacity:1;pointer-events:auto}
+.search-submit:hover{background:var(--green-dark)}
+.search-panel{position:absolute;left:0;right:0;top:calc(100% + 10px);z-index:70;background:#fff;border:1px solid #e7ece4;border-radius:18px;box-shadow:0 24px 60px rgba(20,40,18,.16);padding:8px;max-height:min(440px,70vh);overflow-y:auto;opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .2s,transform .2s,visibility .2s}
+.search.open .search-panel{opacity:1;visibility:visible;transform:none}
+.sp-label{font-family:var(--font-latin);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#98a194;padding:8px 10px 6px}
+.sp-item{display:flex;align-items:center;gap:12px;padding:8px 10px;border-radius:12px;cursor:pointer;transition:background .15s}
+.sp-item.active,.sp-item:hover{background:#f1f7ee}
+.sp-thumb{width:44px;height:44px;flex:none;border-radius:10px;overflow:hidden;background:#eef3eb;display:grid;place-items:center}
+.sp-thumb img{width:100%;height:100%;object-fit:cover}
+.sp-thumb img.sp-icon{width:22px;height:22px;object-fit:contain}
+.sp-text{flex:1;min-width:0}
+.sp-title{display:block;font-size:14px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp-title mark{background:rgba(108,192,74,.22);color:inherit;border-radius:3px;padding:0 1px}
+.sp-cat{display:block;font-size:12px;color:#8a9188;margin-top:1px}
+.sp-arrow{width:16px;height:16px;flex:none;fill:none;stroke:var(--green-dark);stroke-width:2.2;stroke-linecap:round;opacity:0;transform:translateX(-4px);transition:.2s}
+.sp-item.active .sp-arrow,.sp-item:hover .sp-arrow{opacity:1;transform:none}
+.sp-empty{padding:22px 12px;text-align:center;color:#8a9188;font-size:14px}
+.sp-empty svg{width:34px;height:34px;display:block;margin:0 auto 8px;fill:none;stroke:#c3cdbf;stroke-width:1.8;stroke-linecap:round}
+.sp-chips{display:flex;flex-wrap:wrap;gap:6px;padding:2px 10px 10px}
+.sp-chip{font-size:13px;font-weight:500;padding:6px 12px;border-radius:999px;background:#f1f5ef;border:1px solid #e3eadf;color:#3f4a3c;cursor:pointer;transition:.2s}
+.sp-chip:hover{background:var(--green);border-color:var(--green);color:#fff}
 .tools-row{display:flex;align-items:center;gap:22px}
 .socials{display:flex;gap:6px}
 .socials a{display:grid;place-items:center;width:30px;height:30px;border:1.5px solid #9a9a9a;border-radius:5px;transition:.25s}
@@ -168,7 +202,12 @@ h1,h2,h3{margin:0}
   .main-nav>ul>li>a{font-size:16px;padding:14px 4px;border-bottom:1px solid rgba(255,255,255,.2)}
   .main-nav>ul>li>a::after{display:none}
   .main-nav .mobile-tools{padding:20px 4px 0;display:flex;flex-direction:column;gap:16px}
-  .main-nav .mobile-tools .search{width:100%;border-color:#fff;background:#fff;border-radius:6px;border-width:0}
+  .main-nav .mobile-tools .search{width:100%}
+  .main-nav .mobile-tools .search-field{background:#fff;border-color:#fff}
+  .main-nav .mobile-tools .search.focused .search-field{box-shadow:0 0 0 4px rgba(255,255,255,.35)}
+  .main-nav .mobile-tools .search-kbd{display:none}
+  .main-nav .mobile-tools .search-panel{position:relative;top:auto;margin-top:10px;display:none}
+  .main-nav .mobile-tools .search.open .search-panel{display:block}
   .main-nav .mobile-tools .tools-row{justify-content:space-between}
   .main-nav .mobile-tools .socials a{border-color:#fff;width:36px;height:36px}
   .main-nav .mobile-tools .socials svg{stroke:#fff}
